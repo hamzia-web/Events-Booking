@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+.landing-page{
+  background: white url("./assets/bg-grocery.jpg") no-repeat scroll;
+  background-size: cover;
+  height: 100vh;
+  color: whitesmoke;
+}
+.wrapper{
+  padding-top: 200px;
+}

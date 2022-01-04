@@ -1,0 +1,50 @@
+<div class="container mt-3">
+   <div class="row">
+     <div class="col animated zoomInUp">
+       <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, eos, rem. Ab, alias, architecto consectetur deserunt est fuga magnam minus molestiae mollitia nostrum, officia possimus quaerat quis reprehenderit sint veritatis</p>
+     </div>
+   </div>
+<!--  {{selectedProduct | json}}-->
+  <div class="row">
+    <div class="col-md-5 animated zoomInUp delay-1s">
+       <div class="card">
+           <div class="card-header bg-success text-white">
+             <p class="h3 text-center">Update Product</p>
+           </div>
+
+           <div class="card-body">
+             <form (submit)="submitUpdateProduct()">
+                 <div class="form-group">
+                   <input [value]="selectedProduct.name" [(ngModel)]="selectedProduct.name"
+                     type="text" name="name" class="form-control" placeholder="Name"/>
+                 </div>
+               <div class="form-group mt-2">
+                 <div class="custom-file">
+                   <label class="custom-file-label" for="customFile">
+                     <img [src]="selectedProduct.image" width="30" height="30"/>
+                   </label>
+                   <input name="file" (change)="selectProductImage($event)" accept="image/png, image/jpeg"
+                          type="file" class="custom-file-input" id="customFile">
+                 </div>
+               </div>
+                 <div class="form-group">
+                   <input name="price" [value]="selectedProduct.price" [(ngModel)]="selectedProduct.price"
+                     type="number" class="form-control" placeholder="Price"/>
+                 </div>
+                 <div class="form-group">
+                   <input name="qty" [value]="selectedProduct.qty" [(ngModel)]="selectedProduct.qty"
+                     type="number" class="form-control" placeholder="Quantity"/>
+                 </div>
+                 <div class="form-group mt-2">
+                   <textarea name="info" [value]="selectedProduct.info" [(ngModel)]="selectedProduct.info"
+                     name="info" style="resize: none;" rows="4" class="form-control" placeholder="Information"></textarea>
+                 </div>
+                 <div class="form-group mt-2 text-center">
+                   <input type="submit" class="btn btn-success btn-sm" value="Update"/>
+                 </div>
+             </form>
+           </div>
+       </div>
+    </div>
+  </div>
+</div>

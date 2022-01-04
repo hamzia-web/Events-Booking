@@ -1,0 +1,105 @@
+BigBasket Application
+---------------------
+Server Side:
+Express, mongoose, dotenv, CORS
+
+npm i express mongoose dotenv cors
+
+REST API Configuration:
+----------------------
+1. Get all products: http://127.0.0.1:5000/api/products
+   method: GET
+   fields: no-fields
+   express function: router.get()
+
+2. Get single products: http://127.0.0.1:5000/api/products/:id
+	method: GET
+	fields: no-fields
+	express function: router.get()
+
+3. Create a products: http://127.0.0.1:5000/api/products
+   method: POST
+   fields: name, image,price,qty,info
+   express function: router.post()
+
+4. Update a products: http://127.0.0.1:5000/api/products/:id
+   method: PUT
+   fields: name, image,price,qty,info
+   express function: router.put()
+
+5. Delete a products: http://127.0.0.1:5000/api/products/:id
+   method: DELETE
+   fields: no-fields
+   express function: router.delete()
+
+Database configuration:
+-----------------------
+Database: big-basket-angular
+Table/Collection: products
+Fields:
+       name: string,
+	   image: string,
+	   price: number,
+	   qty: number,
+	   info:string,
+	   created: date
+
+Operations	Command Line   Application
+Create:     insertOne()        save()
+Read:       find()             find()
+Update:     updateOne()        findByIdAndUpdate()
+Delete:     deleteOne()        findByIdAndDelete()
+
+Postman/ Insomnia Testing:
+-------------------------
+1. Create Products
+{
+	"name" : "bringal",
+	"image" : "https://www.google.com/products/potato.jpg",
+	"price" : 45,
+	"qty" : 15,
+	"info": "Curry Preparation"
+}
+2. Delete a product:
+http://localhost:5000/api/products/61cd4e949ddc2c52e8267b11
+
+Client-Side Setup/Configuration:
+--------------------------------
+1. Create an angular app(big-basket-angular): ng new big-basket-angular
+2. Create a folder and paster express JS setup and update package.json file with 4 packages cors, nodemon,dotenv
+3. folder structure
+       app
+	     -> root (custom folder)
+		    -> components (custom folder)
+			  ->navbar: ng g c navbar
+			  -> home: ng g c home
+
+	  products(module)
+	    -> components: list-product, admin, create-product, update-product
+		-> services: product.service(deal with CURD operations)
+		-> models: Product
+
+
+Form validations in Angular:
+---------------------------
+(i) Template driven form validation: ngForm, ngModel(information about forms input fields)
+- Lots of validation code inside .html file
+- Mostly used for simple validations
+- Module used: FormsModule
+e.g. Enrollment form
+
+(ii) Reactive form driven
+- Lots of validation code inside .ts file
+- Mostly used for complex validations
+- Module used: ReactiveFormsModule fromBuilder
+e.g. Registration form
+
+Angular Form validations Home Enrollment Registration
+-----------------------------------------------------
+Components: navbar, home, enrollment, registration
+service: user.service
+models: User
+
+Server: (Express)
+router: userRouter-> registration, enrollment
+
