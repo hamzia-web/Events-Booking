@@ -1,105 +1,134 @@
-BigBasket Application
----------------------
-Server Side:
-Express, mongoose, dotenv, CORS
+Authentication and Authorization
+--------------------------------
+Authentication: Login-> Can access some part of application like links
+Authorization: Login + Admin privilege to access admin part of application
 
-npm i express mongoose dotenv cors
+Company HCL:
+------------
+- Public access:
+- Employee access:
+- Admin access: server rooms can't be access by HCL employees as well. Should be HCL employee + Server Admin (Authorization)
 
-REST API Configuration:
-----------------------
-1. Get all products: http://127.0.0.1:5000/api/products
-   method: GET
-   fields: no-fields
-   express function: router.get()
+Event Booking App(MEAN Stack Application)
+----------------------------------------
+- Free Events: Access to all. No need to login
+- Pro Events: Private access(Login required)
+- Upload events: private access + Authorization(Login + Admin)
 
-2. Get single products: http://127.0.0.1:5000/api/products/:id
-	method: GET
-	fields: no-fields
-	express function: router.get()
+Login
+Registration
 
-3. Create a products: http://127.0.0.1:5000/api/products
-   method: POST
-   fields: name, image,price,qty,info
-   express function: router.post()
+Client Side Configuration:
+-------------------------
+Folder structure:
+app
+   root
+	 -> components
+         -> home
+         -> navbar
+     -> services
+     -> models
+	 -> Guards
+	 -> Interceptors
 
-4. Update a products: http://127.0.0.1:5000/api/products/:id
-   method: PUT
-   fields: name, image,price,qty,info
-   express function: router.put()
+   users (ng g module users --route users --module app.module)
+      components
+         -> login
+         -> register
+     -> services -> user.service
+     -> models  -> IUser
 
-5. Delete a products: http://127.0.0.1:5000/api/products/:id
-   method: DELETE
-   fields: no-fields
-   express function: router.delete()
+   events
+     components
+         -> free-events
+         -> pro-events
+     -> services -> event.service
+     -> models  -> IEvent
+
+Server side configuration:
+-------------------------
+Npm Modules(Third-party modules): express, cors, dotenv, gravatar, bcryptjs, mongoose, jsonwebtoken
+npm install express cors dotenv gravatar bcryptjs mongoose jsonwebtoken
+
+REST API:
+---------
+router: userRouter-> /users
+        eventRouter-> /events
+
+userRouter:
+----------
+1. Registration: url: http://localhost:5000/users/register
+                 method: POST
+                 fields: name, email, password
+
+2. Login: url: http://localhost:5000/users/login
+                 method: POST
+                 fields: email, password
+
+eventRouter:
+-----------
+1. Get free events:
+                 url: http://localhost:5000/events/free
+                 method: GET
+                 fields: no fields
+
+2. Get Pro events:
+                 url: http://localhost:5000/events/pro
+                 method: GET
+                 fields: no fields
+
+3. Upload events:
+                 url: http://localhost:5000/events/upload
+                 method: GET
+                 fields: name, image, date, price, type, info
 
 Database configuration:
 -----------------------
-Database: big-basket-angular
-Table/Collection: products
-Fields:
-       name: string,
-	   image: string,
-	   price: number,
-	   qty: number,
-	   info:string,
-	   created: date
+Database Name: events-booking-angular
+Tables: users, events
+Fields Type
+Users table:
+name: string
+email: string
+password:string
+avatar: string
+isAdmin: boolean
+created: date
 
-Operations	Command Line   Application
-Create:     insertOne()        save()
-Read:       find()             find()
-Update:     updateOne()        findByIdAndUpdate()
-Delete:     deleteOne()        findByIdAndDelete()
-
-Postman/ Insomnia Testing:
--------------------------
-1. Create Products
-{
-	"name" : "bringal",
-	"image" : "https://www.google.com/products/potato.jpg",
-	"price" : 45,
-	"qty" : 15,
-	"info": "Curry Preparation"
-}
-2. Delete a product:
-http://localhost:5000/api/products/61cd4e949ddc2c52e8267b11
-
-Client-Side Setup/Configuration:
---------------------------------
-1. Create an angular app(big-basket-angular): ng new big-basket-angular
-2. Create a folder and paster express JS setup and update package.json file with 4 packages cors, nodemon,dotenv
-3. folder structure
-       app
-	     -> root (custom folder)
-		    -> components (custom folder)
-			  ->navbar: ng g c navbar
-			  -> home: ng g c home
-
-	  products(module)
-	    -> components: list-product, admin, create-product, update-product
-		-> services: product.service(deal with CURD operations)
-		-> models: Product
+Events table:
+Fields Type
+name: string
+image: string
+date: string
+price: number
+type: string
+info: string
+created: date
 
 
-Form validations in Angular:
----------------------------
-(i) Template driven form validation: ngForm, ngModel(information about forms input fields)
-- Lots of validation code inside .html file
-- Mostly used for simple validations
-- Module used: FormsModule
-e.g. Enrollment form
+Server-Side validation: (Form validation at server)
+----------------------
+Third-party module: express-validator
 
-(ii) Reactive form driven
-- Lots of validation code inside .ts file
-- Mostly used for complex validations
-- Module used: ReactiveFormsModule fromBuilder
-e.g. Registration form
+Interceptor:
+------------
+will intercept our regular request. we can send token along with request
+request + token
+command: ng g interceptor auth
+Bearer<token>: Request Header
 
-Angular Form validations Home Enrollment Registration
------------------------------------------------------
-Components: navbar, home, enrollment, registration
-service: user.service
-models: User
+Verify token at server side(express):
+------------------------------------
+middleware: a function, will take care of verification of every request
 
-Server: (Express)
-router: userRouter-> registration, enrollment
+Guards:
+------
+If login, allow them to see Pro events, otherwise redirect to login
+command: ng g guard auth
 
+
+Angular Form Bindings:
+----------------------
+(i) touched and untouched: fields touched and not touched
+(ii) dirty and pristine: changed and not changed
+(iii) valid and invalid: valid and invalid

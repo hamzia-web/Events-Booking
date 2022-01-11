@@ -1,0 +1,80 @@
+<!--alert message-->
+<div *ngIf="message" class="alert  alert-success alert-dismissible">
+  <button class="close" data-dismiss="alert">
+    <i class="fa fa-times-circle"></i>
+  </button>
+  {{message}}
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-4 m-auto">
+
+      <!-- Empty Form alert -->
+      <div *ngIf="isEmptyFormSubmitted" class="alert alert-danger alert-dismissible" data-auto-dismiss role="alert" data-auto-dismiss="3000">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <small class="text-danger">Please fill the fields</small>
+      </div>
+
+      <!-- Login error alert -->
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" data-auto-dismiss role="alert" data-auto-dismiss="3000">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <small class="text-danger">Invalid credentials</small>
+      </div>
+
+      <!-- Registration success alert -->
+      <div *ngIf="successMessage" class="alert alert-danger alert-dismissible" data-auto-dismiss role="alert" data-auto-dismiss="3000">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <small class="text-success">{{successMessage}}</small>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-transparent -envelope-open-text">
+          <p class="h4">Register here</p>
+          <div class="card-body bg-light">
+            <form #registerForm="ngForm" (submit)="submitRegisterForm()">
+              <div class="form-group">
+                <input #name="ngModel" name="name" [(ngModel)]="user.name" type="text" class="form-control" placeholder="Name"
+                       [class.is-invalid]="name.touched && name.invalid"
+                       [class.is-valid]="name.touched && name.valid"
+                       required pattern="^[a-z0-9_-]{3,16}$"/>
+                <small *ngIf="name.touched && name.invalid" class="text-danger">Please enter valid name</small>
+                <small *ngIf="name.touched && name.valid" class="text-success">Looks good!</small>
+              </div>
+              <div class="form-group">
+                <input #email="ngModel" name="email" [(ngModel)]="user.email" type="email" class="form-control" placeholder="Email"
+                       [class.is-invalid]="email.touched && email.invalid"
+                       [class.is-valid]="email.touched && email.valid"
+                       required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                <small *ngIf="email.touched && email.invalid" class="text-danger">Please enter valid email</small>
+                <small *ngIf="email.touched && email.valid" class="text-success">Looks good!</small>
+              </div>
+              <div class="form-group">
+                <input #password="ngModel" name="password" [(ngModel)]="user.password" type="password" class="form-control" placeholder="Password"
+                       [class.is-invalid]="password.touched && password.invalid"
+                       [class.is-valid]="password.touched && password.valid"
+                       required pattern=""/>
+                <small *ngIf="password.touched && password.invalid" class="text-danger">Please enter valid password</small>
+                <small *ngIf="password.touched && password.valid" class="text-success">Looks good!</small>
+              </div>
+              <div class="form-check my-2">
+                <input (change)="showPassword()" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Show Password
+                </label>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-secondary btn-sm"/>
+              </div>
+              <small>Have an Account?
+                  <a routerLink="/users/login" class="text-danger">Login</a>
+              </small>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <img src="../../../../assets/images/events-booking.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

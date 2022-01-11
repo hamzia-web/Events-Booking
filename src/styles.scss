@@ -4,11 +4,21 @@
 @import '~bootstrap/scss/bootstrap';
 
 .landing-page{
-  background: white url("./assets/bg-grocery.jpg") no-repeat scroll;
+  background: white url("./assets/images/bg-image.jpg") no-repeat scroll;
   background-size: cover;
   height: 100vh;
-  color: whitesmoke;
+  color: lightsalmon;
 }
 .wrapper{
   padding-top: 200px;
+}
+
+.is-invalid{
+  background-color: #fdeae2 !important;
+  border-left: 10px solid lightsalmon;
+}
+
+.is-valid{
+  background-color: lightgreen !important;
+  border-left: 10px solid lightgreen;
 }
